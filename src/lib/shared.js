@@ -1,10 +1,10 @@
 //This is the function that handles requests to the server
-export async function requestData(type, token = "", key = "", data = {}) {
+export async function requestData(type, password = null, key = null, data = {}) {
 
 	const body = {
 		type: type,
 		data: data,
-		token: token,
+		password: password,
 		key: key
 	};
 

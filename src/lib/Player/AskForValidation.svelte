@@ -1,6 +1,6 @@
 <script>
 	import { RequestType, requestData } from "../shared";
-	import EncryptRsa from "encrypt-rsa";
+	import { Crypt, RSA } from "hybrid-crypto-js";
 
 	export var players = [];
 	var selected_player = null;
@@ -10,19 +10,22 @@
 	var password;
 
 	async function askForValidation() {
-		const encryptRsa = new EncryptRsa();
+		var crypt = new Crypt();
 		const key = await requestData(RequestType.generateEncryptionKey);
-		const encrypted_password =
-			await encryptRsa.encryptStringWithRsaPublicKey({
-				text: password,
-				publicKey: key,
-			});
+
+		const encrypted_password = await crypt.encrypt(key, password);
+		
+
 
 		requestData(RequestType.validateChallenge, encrypted_password, key, {
 			validatedUserId: selected_player.id,
 			validatedChallengeId: selected_defi.id,
 		}).then((data) => {
-			console.log(data);
+			if (data == true) {
+				alert("Challenge validé");
+			} else {
+				alert("Challenge non validé");
+			}
 		});
 	}
 </script>
