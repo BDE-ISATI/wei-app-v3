@@ -76,10 +76,6 @@
 </div>
 
 <style>
-	.card {
-		margin-top: 10px;
-	}
-
 	.top {
 		padding: 1px;
 		padding-left: 30px;

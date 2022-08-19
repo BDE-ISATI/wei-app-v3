@@ -1,27 +1,18 @@
 <script>
 	import BottomBar from "./lib/BottomBar.svelte";
-	import ConnectionCard from "./lib/Auth/ConnectionCard.svelte";
-	import CreateDefi from "./lib/Defis/CreateDefi.svelte";
 	import Defi from "./lib/Defis/Defi.svelte";
-	import DeleteDefi from "./lib/Defis/DeleteDefi.svelte";
-	import Disconnect from "./lib/Auth/Disconnect.svelte";
 	import LoadingIcon from "./lib/LoadingIcon.svelte";
 	import Player from "./lib/Scoreboard/Player.svelte";
-	import CreatePlayer from "./lib/Player/CreatePlayer.svelte";
-	import DeletePlayer from "./lib/Player/DeletePlayer.svelte";
 
 	import { requestData, P, Perm, RequestType } from "./lib/shared.js";
-	import ValidateDefi from "./lib/Defis/ValidateDefi.svelte";
+	import AskForValidation from "./lib/Player/AskForValidation.svelte";
 
 	//Runtime var
 	var pageActuelle = P.PDefi;
 	var defis = [];
-	var validated_username = "";
-	var validated_password_encoded = "";
-	var validated_perm = Perm.none;
 
 	function loadDefi() {
-		requestData(RequestType.GetDefi).then(function (data) {
+		requestData(RequestType.getAllDefi).then(function (data) {
 			defis = data;
 		});
 	}
@@ -30,12 +21,10 @@
 	var classement = [];
 
 	function loadClassement() {
-		requestData(RequestType.GetAllUser).then(function (data) {
-			classement = data.users.sort(function (a, b) {
+		requestData(RequestType.getAllPlayers).then(function (data) {
+			classement = data.sort(function (a, b) {
 				return b.points - a.points;
 			});
-
-			classement = classement.filter((user) => user.perms == Perm.player);
 		});
 	}
 </script>
@@ -57,46 +46,10 @@
 					<LoadingIcon />
 				{/if}
 			{:else if pageActuelle == P.PAccueil}
-				{#if validated_username === "" && validated_password_encoded === ""}
-					<ConnectionCard
-						bind:validated_username
-						bind:validated_password_encoded
-						bind:validated_perm
-					/>
-				{:else}
-					<Disconnect
-						bind:validated_username
-						bind:validated_password_encoded
-					/>
-					{#if validated_perm >= Perm.manager}
-						<ValidateDefi
-							bind:validated_username
-							bind:validated_password_encoded
-						/>
-						<CreateDefi
-							bind:validated_username
-							bind:validated_password_encoded
-						/>
-						<DeleteDefi
-							bind:validated_username
-							bind:validated_password_encoded
-						/>
-						<CreatePlayer
-							bind:validated_username
-							bind:validated_password_encoded
-						/>
-						<DeletePlayer
-							bind:validated_username
-							bind:validated_password_encoded
-						/>
-					{/if}
-				{/if}
+				<AskForValidation bind:players={classement} bind:defis />
 			{:else if classement.length != 0}
 				{#each classement as _player}
-					<Player
-						username={_player.nickname}
-						points={_player.points}
-					/>
+					<Player username={_player.name} points={_player.points} />
 				{/each}
 			{:else}
 				<LoadingIcon />
@@ -105,6 +58,7 @@
 		</div>
 		<BottomBar
 			bind:state={pageActuelle}
+			on:accueil_request={loadDefi && loadClassement}
 			on:defi_request={loadDefi}
 			on:scoreboard_request={loadClassement}
 		/>
@@ -146,6 +100,8 @@
 		width: 100%;
 		display: block;
 		max-width: 400px;
+		align-content: center;
+		text-align: center;
 	}
 
 	.spacer {
@@ -167,6 +123,7 @@
 		box-shadow: 0px 0px 15px rgb(202, 202, 202);
 		transition: 0.2s;
 		position: relative;
+		text-align: left;
 	}
 
 	:global(.card:before) {
@@ -189,6 +146,21 @@
 	}
 
 	:global(button) {
+		font-family: inherit;
+		font-size: inherit;
+		position: relative;
+		padding: 10px;
+		margin: 10px;
+		border-radius: 10px;
+		border-width: 0px;
+		background-color: white;
+
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+		transition-duration: 500ms;
+	}
+
+	:global(input) {
 		font-family: inherit;
 		font-size: inherit;
 		position: relative;

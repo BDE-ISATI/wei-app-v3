@@ -1,11 +1,11 @@
 //This is the function that handles requests to the server
-export async function requestData(type, user = "", pass = "", data = {}) {
+export async function requestData(type, token = "", key = "", data = {}) {
 
 	const body = {
 		type: type,
 		data: data,
-		username: user,
-		password: pass
+		token: token,
+		key: key
 	};
 
 	console.log("Requesting for: ", type);
@@ -27,8 +27,11 @@ export async function requestData(type, user = "", pass = "", data = {}) {
         }
     });
 
+	console.log(res);
     return res;
 }
+
+
 
 //Const
 export const P = {
@@ -38,19 +41,14 @@ export const P = {
 };
 
 export const RequestType = {
-	GetClassement: "classement",
-
-	GetUserAuth: "auth",
-	GetUserPerm: "permissions",
-	GetUser: "user",
-	GetAllUser: "getall_user",
-	CreateUser: "create_user",
-	DeleteUser: "delete_user",
-
-	GetDefi: "defis",
-	CreateDefi: "create_defi",
-	DeleteDefi: "delete_defi",
-	ValidateDefi: "validate_defi",
+	getAllPlayers: "getAllPlayers",
+	createPlayer: "createPlayer",
+	deletePlayer: "deletePlayer",
+	validateChallenge: "validateChallenge",
+	getAllDefi: "getAllDefi",
+	createDefi: "createDefi",
+	deleteDefi: "deleteDefi",
+	generateEncryptionKey: "generateEncryptionKey",
 };
 
 export const Perm = {

@@ -16,6 +16,9 @@
 	function scoreboard_request() {
 		dispatch("scoreboard_request");
 	}
+	function accueil_request() {
+		dispatch("accueil_request");
+	}
 	function setState(desired) {
 		state = desired;
 	}
@@ -25,6 +28,7 @@
 	<button
 		on:click={() => {
 			state = P.PAccueil;
+			accueil_request();
 		}}>Accueil</button
 	>
 	<button
