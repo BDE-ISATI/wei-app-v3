@@ -1,3 +1,5 @@
+import { Crypt, RSA } from "hybrid-crypto-js";
+
 //This is the function that handles requests to the server
 export async function requestData(type, password = null, key = null, data = {}) {
 
@@ -29,6 +31,15 @@ export async function requestData(type, password = null, key = null, data = {}) 
 
 	console.log(res);
     return res;
+}
+
+export async function requestWithAuth(type, password, data) {
+	var crypt = new Crypt();
+	const key = await requestData(RequestType.generateEncryptionKey);
+
+	const encrypted_password = await crypt.encrypt(key, password);
+
+	return await requestData(type, encrypted_password, key, data);
 }
 
 
