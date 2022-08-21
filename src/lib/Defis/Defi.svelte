@@ -6,16 +6,11 @@
 </script>
 
 <div class="card">
-	<div class="card_overshadow" />
-	<div class="top">
-		<h3>{name} - {points < 0 ? "à définir" : points}</h3>
+	<div class="card-header">
+		<h3>{name} - {points} points</h3>
 	</div>
 	<p class="description">{description} - id:{id}</p>
 </div>
 
 <style>
-	.description {
-		padding: 20px;
-		padding-top: 5px;
-	}
 </style>

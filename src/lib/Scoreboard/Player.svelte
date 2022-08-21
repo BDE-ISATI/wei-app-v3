@@ -4,12 +4,8 @@
 </script>
 
 <div class="card">
-	<div class="card_overshadow" />
-	<p class="description">{points} points - {username}</p>
+	<p class="description">{username} - {points} points</p>
 </div>
 
 <style>
-	.description {
-		padding: 20px;
-	}
 </style>

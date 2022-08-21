@@ -6,9 +6,12 @@
 
 	import { requestData, P, Perm, RequestType } from "./lib/shared.js";
 	import AskForValidation from "./lib/Player/AskForValidation.svelte";
+	import AskForCreation from "./lib/Player/AskForCreation.svelte";
+
+	const isati_logo = "images/isati_logo.png";
 
 	//Runtime var
-	var pageActuelle = P.PDefi;
+	var pageActuelle = P.PAccueil;
 	var defis = [];
 
 	function loadDefi() {
@@ -16,7 +19,6 @@
 			defis = data;
 		});
 	}
-	loadDefi();
 
 	var classement = [];
 
@@ -27,6 +29,9 @@
 			});
 		});
 	}
+
+	loadDefi();
+	loadClassement();
 </script>
 
 <main>
@@ -46,6 +51,12 @@
 					<LoadingIcon />
 				{/if}
 			{:else if pageActuelle == P.PAccueil}
+				<div class="welcomecard">
+					<h3>Bienvenue sur le WEI 2022 de l'ESIR!</h3>
+					<img class="logo" width=300 src={isati_logo} alt="Logo isati 2022" />
+				</div>
+
+				<AskForCreation />
 				<AskForValidation bind:players={classement} bind:defis />
 			{:else if classement.length != 0}
 				{#each classement as _player}
@@ -65,19 +76,14 @@
 	</div>
 </main>
 
-<svelte:head>
-	<!--<link href="http://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet" />-->
-</svelte:head>
-
 <style>
-	@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/cascadia-code.min.css");
+	@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 	:root {
-		font-family: "Cascadia Code", sans-serif;
+		font-family: "Roboto", sans-serif;
 		font-size: 5vw;
 		color: rgb(34, 34, 34);
-		/*--main-color: linear-gradient(rgb(255, 175, 99), #e94545);*/
-		--main-color: #e94545;
+		background: linear-gradient(rgb(202, 214, 224), rgb(212, 237, 247));
 	}
 
 	@media only screen and (min-width: 450px) {
@@ -105,88 +111,33 @@
 	}
 
 	.spacer {
-		height: 20vh;
+		height: 15vh;
 	}
 
-	/*card stuff*/
-	:global(.top) {
-		padding: 30px;
-		background: var(--main-color);
-		border-top-left-radius: 20px;
-		border-top-right-radius: 20px;
-		color: white;
+	.welcomecard {
+		padding: 20px;
+		margin: 20px;
+	}
+
+	.logo {
+		size: 1em;
 	}
 
 	:global(.card) {
-		margin-top: 10px;
-		border-radius: 20px;
-		box-shadow: 0px 0px 15px rgb(202, 202, 202);
-		transition: 0.2s;
-		position: relative;
+		margin-bottom: 1em;
 		text-align: left;
-	}
-
-	:global(.card:before) {
-		content: "";
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-
-		border-radius: 20px;
-		box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.7);
-
-		pointer-events: none;
-	}
-
-	:global(.card:hover) {
-		box-shadow: 0px 0px 15px gray;
-	}
-
-	:global(button) {
-		font-family: inherit;
-		font-size: inherit;
-		position: relative;
-		padding: 10px;
-		margin: 10px;
-		border-radius: 10px;
-		border-width: 0px;
 		background-color: white;
-
-		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-
-		transition-duration: 500ms;
+		padding: 1em;
+		border-radius: 0.8em;
 	}
 
-	:global(input) {
-		font-family: inherit;
-		font-size: inherit;
-		position: relative;
-		padding: 10px;
-		margin: 10px;
-		border-radius: 10px;
-		border-width: 0px;
-		background-color: white;
-
-		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-
-		transition-duration: 500ms;
-	}
-
-	:global(button:hover) {
-		box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
-	}
-
+	:global(input),
+	:global(button),
 	:global(select) {
-		font-family: inherit;
-		font-size: inherit;
-		padding: 10px;
-		margin: 10px;
-		border-radius: 10px;
-		border-width: 0px;
-
-		box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
+		border: none;
+		border-bottom: 2px solid black;
+		border-radius: 0.5em;
+		padding: 0.5em;
+		margin-bottom: 0.5em;
 	}
 </style>

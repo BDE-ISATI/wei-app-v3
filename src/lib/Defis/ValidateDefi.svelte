@@ -45,7 +45,6 @@
 </script>
 
 <div class="card">
-	<div class="card_overshadow" />
 	<div class="top">
 		<h3>Valider un défi</h3>
 	</div>
@@ -76,13 +75,4 @@
 </div>
 
 <style>
-	.top {
-		padding: 1px;
-		padding-left: 30px;
-	}
-
-	.text {
-		margin: 10px;
-		margin-left: 15px;
-	}
 </style>

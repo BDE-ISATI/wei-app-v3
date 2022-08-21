@@ -1,43 +1,41 @@
 <script>
-	import { RequestType, requestWithAuth } from "../shared";
+	import { requestData, RequestType, requestWithAuth } from "../shared";
 
 	export var players = [];
 	var selected_player = null;
 	export var defis = [];
 	var selected_defi = null;
 
-	var password;
-
 	async function askForValidation() {
-		const result = await requestWithAuth(
+		const result = await requestData(
 			RequestType.validateChallenge,
-			password,
+			null,
+			null,
 			{
 				validatedUserId: selected_player.id,
 				validatedChallengeId: selected_defi.id,
 			}
 		);
-		
+
 		if (result) {
-			alert("Challenge validé");
+			alert("Requête envoyée");
 		} else {
-			alert("Challenge non validé");
+			alert("Erreur lors de l'envoi de la requête");
 		}
 	}
 </script>
 
 <div class="card">
-	<div class="card_overshadow" />
-	<div class="top">
+	<div class="card-header">
 		<h3>Valider un défi</h3>
 	</div>
 
 	<form on:submit|preventDefault={askForValidation}>
 		<div class="text">
 			Joueur:
-			<select bind:value={selected_player} required={true}>
+			<select class="list-group" bind:value={selected_player} required={true}>
 				{#each players as p}
-					<option value={p}>
+					<option class="list-group-item" value={p}>
 						{p.name}
 					</option>
 				{/each}
@@ -45,31 +43,17 @@
 		</div>
 		<div class="text">
 			Défi:
-			<select bind:value={selected_defi} required={true}>
+			<select class="list-group" bind:value={selected_defi} required={true}>
 				{#each defis as d}
-					<option value={d}>
+					<option class="list-group-item" value={d}>
 						{d.name}
 					</option>
 				{/each}
 			</select>
 		</div>
-		<input
-			type="password"
-			placeholder="Mot de passe"
-			required={true}
-			bind:value={password}
-		/>
 		<button type="submit">Demander la validation</button>
 	</form>
 </div>
 
 <style>
-	.text {
-		margin: 10px;
-		margin-left: 15px;
-	}
-
-	.top {
-		padding: 20px;
-	}
 </style>
