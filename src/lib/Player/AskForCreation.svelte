@@ -1,17 +1,20 @@
 <script>
-	import { requestData, RequestType, requestWithAuth } from "../shared";
+	import { readFileAsync, requestData, RequestType } from "../shared";
 
     var pseudo = "";
+	var files;
 
 	async function askForCreation() {
+		const image = (await readFileAsync(files[0])).replace(/^data:image\/[a-z]+;base64,/, "");
+
 		const result = await requestData(
 			RequestType.createPlayer,
-			null,
-			null,
 			{
 				createdUserUsername: pseudo,
+				createdUserProfilePicture: image,
 			}
 		);
+		
 		
 		if (result) {
 			alert("Requête envoyée");
@@ -27,8 +30,17 @@
 	</div>
 
 	<form on:submit|preventDefault={askForCreation}>
-		<div class="text">
+		<div>
 			<input type="text" required={true} bind:value={pseudo} pattern="[A-Za-z '0-9]*" placeholder="Ton pseudo">
+		</div>
+		<div>
+			Photo:
+			<input
+				type="file"
+				accept="image/png, image/jpeg"
+				bind:files
+				required={true}
+			/>
 		</div>
 		<button type="submit">Demander son compte</button>
 	</form>

@@ -60,7 +60,7 @@
 				<AskForValidation bind:players={classement} bind:defis />
 			{:else if classement.length != 0}
 				{#each classement as _player}
-					<Player username={_player.name} points={_player.points} />
+					<Player username={_player.name} points={_player.points} imgUrl={_player.profilePictureUrl}/>
 				{/each}
 			{:else}
 				<LoadingIcon />
@@ -139,5 +139,17 @@
 		border-radius: 0.5em;
 		padding: 0.5em;
 		margin-bottom: 0.5em;
+	}
+
+	:global(input::-webkit-file-upload-button)
+	{
+		border: none;
+		border-bottom: 2px solid black;
+		border-radius: 0.5em;
+		padding: 0.5em;
+	}
+
+	:global(input[type="file"]) {
+		border: none;
 	}
 </style>
