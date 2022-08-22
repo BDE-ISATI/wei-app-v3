@@ -17,8 +17,8 @@ export async function requestData(type, data = {}, password = null, key = null) 
 		key: key
 	};
 
-	console.log("Requesting for: ", type);
-	console.log(data);
+	//console.log("Requesting for: ", type);
+	//console.log(data);
 	const res = await fetch(
 		"https://polar-oasis-87108.herokuapp.com/wei-app-server.herokuapp.com",
 		//"http://127.0.0.1:5000",
