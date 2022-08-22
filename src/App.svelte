@@ -8,7 +8,7 @@
 	import AskForValidation from "./lib/Player/AskForValidation.svelte";
 	import AskForCreation from "./lib/Player/AskForCreation.svelte";
 
-	const isati_logo = "images/isati_logo.png";
+	const isati_logo = "images/isati_logo300px.png";
 
 	//Runtime var
 	var pageActuelle = P.PAccueil;
@@ -53,14 +53,23 @@
 			{:else if pageActuelle == P.PAccueil}
 				<div class="welcomecard">
 					<h3>Bienvenue sur le WEI 2022 de l'ESIR!</h3>
-					<img class="logo" width=300 src={isati_logo} alt="Logo isati 2022" />
+					<img
+						class="logo"
+						width="300"
+						src={isati_logo}
+						alt="Logo isati 2022"
+					/>
 				</div>
 
 				<AskForCreation />
 				<AskForValidation bind:players={classement} bind:defis />
 			{:else if classement.length != 0}
 				{#each classement as _player}
-					<Player username={_player.name} points={_player.points} imgUrl={_player.profilePictureUrl}/>
+					<Player
+						username={_player.name}
+						points={_player.points}
+						imgUrl={_player.profilePictureUrl}
+					/>
 				{/each}
 			{:else}
 				<LoadingIcon />
@@ -81,7 +90,6 @@
 
 	:root {
 		font-family: "Roboto", sans-serif;
-		font-size: 5vw;
 		color: rgb(34, 34, 34);
 		background: linear-gradient(rgb(202, 214, 224), rgb(212, 237, 247));
 	}
@@ -131,6 +139,9 @@
 		border-radius: 0.8em;
 	}
 
+	/*
+	 forms
+	*/
 	:global(input),
 	:global(button),
 	:global(select) {
@@ -138,18 +149,31 @@
 		border-bottom: 2px solid black;
 		border-radius: 0.5em;
 		padding: 0.5em;
-		margin-bottom: 0.5em;
+		margin-top: auto;
+		margin-bottom: auto;
+		background-color: rgb(233, 233, 233);
 	}
 
-	:global(input::-webkit-file-upload-button)
-	{
-		border: none;
-		border-bottom: 2px solid black;
-		border-radius: 0.5em;
-		padding: 0.5em;
+	:global(input:hover),
+	:global(button:hover),
+	:global(select:hover) {
+		background-color: white;
 	}
 
-	:global(input[type="file"]) {
-		border: none;
+	:global(input::-webkit-file-upload-button) {
+		display: none;
+	}
+
+	:global(form) {
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+	}
+
+	:global(.large) {
+		grid-column: 1 / 3;
+	}
+
+	:global(p) {
+		font-size: 1em;
 	}
 </style>

@@ -1,21 +1,20 @@
 <script>
-	import { readFileAsync, requestData, RequestType } from "../shared";
+	import { P, readFileAsync, requestData, RequestType } from "../shared";
 
-    var pseudo = "";
+	var pseudo = "";
 	var files;
 
 	async function askForCreation() {
-		const image = (await readFileAsync(files[0])).replace(/^data:image\/[a-z]+;base64,/, "");
-
-		const result = await requestData(
-			RequestType.createPlayer,
-			{
-				createdUserUsername: pseudo,
-				createdUserProfilePicture: image,
-			}
+		const image = (await readFileAsync(files[0])).replace(
+			/^data:image\/[a-z]+;base64,/,
+			""
 		);
-		
-		
+
+		const result = await requestData(RequestType.createPlayer, {
+			createdUserUsername: pseudo,
+			createdUserProfilePicture: image,
+		});
+
 		if (result) {
 			alert("Requête envoyée");
 		} else {
@@ -30,19 +29,22 @@
 	</div>
 
 	<form on:submit|preventDefault={askForCreation}>
-		<div>
-			<input type="text" required={true} bind:value={pseudo} pattern="[A-Za-z '0-9]*" placeholder="Ton pseudo">
-		</div>
-		<div>
-			Photo:
-			<input
-				type="file"
-				accept="image/png, image/jpeg"
-				bind:files
-				required={true}
-			/>
-		</div>
-		<button type="submit">Demander son compte</button>
+		<input
+			type="text"
+			class="large"
+			required={true}
+			bind:value={pseudo}
+			pattern="[A-Za-z '0-9]*"
+			placeholder="Ton pseudo"
+		/>
+		<p>Photo:</p>
+		<input
+			type="file"
+			accept="image/png, image/jpeg"
+			bind:files
+			required={true}
+		/>
+		<button class="large" type="submit">Demander son compte</button>
 	</form>
 </div>
 

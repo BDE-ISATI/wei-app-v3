@@ -9,7 +9,10 @@
 	var files;
 
 	async function askForValidation() {
-		const image = (await readFileAsync(files[0])).replace(/^data:image\/[a-z]+;base64,/, "");
+		const image = (await readFileAsync(files[0])).replace(
+			/^data:image\/[a-z]+;base64,/,
+			""
+		);
 
 		const result = await requestData(RequestType.validateChallenge, {
 			validatedUserId: selected_player.id,
@@ -31,44 +34,30 @@
 	</div>
 
 	<form on:submit|preventDefault={askForValidation}>
-		<div>
-			Joueur:
-			<select
-				class="list-group"
-				bind:value={selected_player}
-				required={true}
-			>
-				{#each players as p}
-					<option class="list-group-item" value={p}>
-						{p.name}
-					</option>
-				{/each}
-			</select>
-		</div>
-		<div>
-			Défi:
-			<select
-				class="list-group"
-				bind:value={selected_defi}
-				required={true}
-			>
-				{#each defis as d}
-					<option class="list-group-item" value={d}>
-						{d.name}
-					</option>
-				{/each}
-			</select>
-		</div>
-		<div>
-			Photo:
-			<input
-				type="file"
-				accept="image/png, image/jpeg"
-				bind:files
-				required={true}
-			/>
-		</div>
-		<button type="submit">Demander la validation</button>
+		<p>Joueur:</p>
+		<select class="list-group" bind:value={selected_player} required={true}>
+			{#each players as p}
+				<option class="list-group-item" value={p}>
+					{p.name}
+				</option>
+			{/each}
+		</select>
+		<p>Défi:</p>
+		<select class="list-group" bind:value={selected_defi} required={true}>
+			{#each defis as d}
+				<option class="list-group-item" value={d}>
+					{d.name}
+				</option>
+			{/each}
+		</select>
+		<p>Photo:</p>
+		<input
+			type="file"
+			accept="image/png, image/jpeg"
+			bind:files
+			required={true}
+		/>
+		<button class="large" type="submit">Demander la validation</button>
 	</form>
 </div>
 
