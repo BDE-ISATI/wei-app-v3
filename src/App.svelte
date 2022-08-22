@@ -92,6 +92,7 @@
 		font-family: "Roboto", sans-serif;
 		color: rgb(34, 34, 34);
 		background: linear-gradient(rgb(202, 214, 224), rgb(212, 237, 247));
+		background-attachment: fixed;
 	}
 
 	@media only screen and (min-width: 450px) {
