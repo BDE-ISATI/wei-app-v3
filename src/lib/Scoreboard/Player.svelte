@@ -6,7 +6,7 @@
 
 <div class="card">
 	<!-- svelte-ignore a11y-img-redundant-alt -->
-	<img src={imgUrl} class="user_pfp" alt="Photo de profil"/>
+	<img src={imgUrl} class="user_pfp" alt="Photo de profil" />
 	<p class="description">{username} - {points} points</p>
 </div>
 
@@ -15,7 +15,7 @@
 		width: 5em;
 		height: 5em;
 		border-radius: 50%;
-		object-fit:cover;
+		object-fit: cover;
 		grid-column: 1;
 		grid-row: 1;
 	}
@@ -31,5 +31,10 @@
 		display: grid;
 		grid-template-columns: auto;
 		grid-template-rows: 1fr;
+	}
+
+	p {
+		margin: auto;
+		margin-left: 1em;
 	}
 </style>
