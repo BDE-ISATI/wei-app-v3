@@ -56,15 +56,17 @@
 		grid-template-columns: repeat(3, 1fr);
 	}
 
-	/*
+	
 	button {
-		font-family: inherit;
-		font-weight: inherit;
-		font-size: inherit;
-		background-color: rgba(0, 0, 0, 0);
-		border: 0px;
-		box-shadow: none;
+		font-weight: 600;
+		font-size: 1em;
+		border-radius: 0;
+		margin: 0;
+		padding: auto;
+		background-color: white;
+	}
 
-		transition-duration: 500ms;
-	}*/
+	button:active {
+		background-color: rgb(219, 219, 219);
+	}
 </style>

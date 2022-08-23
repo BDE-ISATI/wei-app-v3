@@ -153,6 +153,7 @@
 		margin-top: auto;
 		margin-bottom: auto;
 		background-color: rgb(233, 233, 233);
+		transition-duration: 400ms;
 	}
 
 	:global(input:hover),

@@ -14,6 +14,11 @@
 			""
 		);
 
+		if (new Blob([image]).size / 1e+6) {
+			alert("Image trop grosse! (dois faire moins de 10Mb)");
+			return;
+		}
+
 		const result = await requestData(RequestType.validateChallenge, {
 			validatedUserId: selected_player.id,
 			validatedChallengeId: selected_defi.id,

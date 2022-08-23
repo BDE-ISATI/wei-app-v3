@@ -9,7 +9,7 @@
 	<div class="card-header">
 		<h3>{name} - {points} points</h3>
 	</div>
-	<p class="description">{description} - id:{id}</p>
+	<p class="description">{description}</p>
 </div>
 
 <style>
