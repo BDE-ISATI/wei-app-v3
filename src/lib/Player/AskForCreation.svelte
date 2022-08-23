@@ -10,10 +10,10 @@
 			""
 		);
 
-if (new Blob([image]).size / 1e+6) {
-	alert("Image trop grosse! (dois faire moins de 10Mb)");
-	return;
-}
+		if (new Blob([image]).size / 1e6 > 10) {
+			alert("Image trop grosse! (dois faire moins de 10Mb)");
+			return;
+		}
 
 		const result = await requestData(RequestType.createPlayer, {
 			createdUserUsername: pseudo,

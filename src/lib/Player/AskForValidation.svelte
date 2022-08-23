@@ -14,7 +14,7 @@
 			""
 		);
 
-		if (new Blob([image]).size / 1e+6) {
+		if (new Blob([image]).size / 1e+6 > 10) {
 			alert("Image trop grosse! (dois faire moins de 10Mb)");
 			return;
 		}
