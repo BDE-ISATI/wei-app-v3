@@ -1,3 +1,10 @@
+const DATABASE_SERVER = "https://polar-oasis-87108.herokuapp.com/wei-app-server.herokuapp.com";
+
+
+
+
+
+
 import { Crypt, RSA } from "hybrid-crypto-js";
 
 /**
@@ -20,7 +27,7 @@ export async function requestData(type, data = {}, password = null, key = null) 
 	//console.log("Requesting for: ", type);
 	//console.log(data);
 	const res = await fetch(
-		"https://polar-oasis-87108.herokuapp.com/wei-app-server.herokuapp.com",
+		DATABASE_SERVER,
 		//"http://127.0.0.1:5000",
 		{
 			method: "POST",
