@@ -1,4 +1,4 @@
-const DATABASE_SERVER = "https://polar-oasis-87108.herokuapp.com/wei-app-server.herokuapp.com";
+const DATABASE_SERVER = "https://isati-wei-proxy.herokuapp.com/isati-wei-server.herokuapp.com";
 
 
 
