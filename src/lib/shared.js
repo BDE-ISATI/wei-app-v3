@@ -97,20 +97,10 @@ export const P = {
 	PClassement: "Classement",
 };
 
-export const RequestType = {
+const RequestType = {
 	getAllPlayers: "getAllPlayers",
 	createPlayer: "createPlayer",
-	deletePlayer: "deletePlayer",
 	validateChallenge: "validateChallenge",
 	getAllDefi: "getAllDefi",
-	createDefi: "createDefi",
-	deleteDefi: "deleteDefi",
 	generateEncryptionKey: "generateEncryptionKey",
-};
-
-export const Perm = {
-	all: 3,
-	manager: 2,
-	player: 1,
-	none: 0,
 };
