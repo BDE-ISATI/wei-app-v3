@@ -104,7 +104,7 @@ export const P = {
 	PClassement: "Classement",
 };
 
-const RequestType = {
+export const RequestType = {
 	getAllPlayers: "getAllPlayers",
 	createPlayer: "createPlayer",
 	validateChallenge: "validateChallenge",

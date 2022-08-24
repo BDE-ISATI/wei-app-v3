@@ -4,7 +4,7 @@
 	import LoadingIcon from "./lib/LoadingIcon.svelte";
 	import Player from "./lib/Scoreboard/Player.svelte";
 
-	import { requestData, P, Perm, RequestType } from "./lib/shared.js";
+	import { requestData, P, RequestType } from "./lib/shared.js";
 	import AskForValidation from "./lib/Player/AskForValidation.svelte";
 	import AskForCreation from "./lib/Player/AskForCreation.svelte";
 
@@ -42,9 +42,9 @@
 					{#each defis as _defi}
 						<Defi
 							name={_defi.name}
-							id={_defi.id}
 							description={_defi.description}
 							points={_defi.points}
+							image={_defi.image}
 						/>
 					{/each}
 				{:else}
