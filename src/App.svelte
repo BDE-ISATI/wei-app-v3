@@ -49,9 +49,13 @@
 	loadDefi();
 	loadClassement();
 	loadTeams();
+
+	var isScrollButtonHidden = false;
+	window.onscroll = () => {isScrollButtonHidden = !(window.scrollY > 0)};
 </script>
 
 <main>
+	<button class="go_to_top" data-ishidden={isScrollButtonHidden} on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Retourner en haut</button>
 	<div class="center">
 		<div class="app_center">
 			{#if pageActuelle == P.PDefi}
@@ -110,13 +114,16 @@
 				loadClassement();
 				loadTeams();
 				loadDefi();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
 			}}
 			on:defi_request={() => {
 				loadDefi();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
 			}}
 			on:scoreboard_request={() => {
 				loadClassement();
 				loadTeams();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
 			}}
 		/>
 	</div>
@@ -167,6 +174,23 @@
 
 	.logo {
 		size: 1em;
+	}
+
+	.go_to_top {
+		position: fixed;
+		overflow: hidden;
+		right: 10%;
+		box-shadow: 0px 0px 10px black;
+		transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(.15,.01,0,1);
+	}
+	
+	.go_to_top[data-ishidden="true"] {
+		bottom: -10%;
+	}
+	
+	.go_to_top[data-ishidden="false"] {
+		bottom: 10%;
 	}
 
 	:global(.card) {

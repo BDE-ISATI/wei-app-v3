@@ -54,6 +54,7 @@
 		height: 8vh;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
+		box-shadow: 0px 0px 10px black;
 	}
 
 	
