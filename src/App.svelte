@@ -7,11 +7,17 @@
 	import { requestData, P, RequestType } from "./lib/shared.js";
 	import AskForValidation from "./lib/Player/AskForValidation.svelte";
 	import AskForCreation from "./lib/Player/AskForCreation.svelte";
+	import ClassementSelector from "./lib/ClassementSelector.svelte";
 
 	const isati_logo = "images/isati_logo300px.png";
 
-	//Runtime var
-	var pageActuelle = P.PAccueil;
+	//Choisis la page affichée
+	var pageActuelle = P.PClassement;
+
+	//Choisis quel type de classement est affiché
+	var isshowingjoueur = true;
+
+	//Infos
 	var defis = [];
 
 	function loadDefi() {
@@ -30,11 +36,11 @@
 		});
 	}
 
-	var equipes = []
+	var equipes = [];
 
 	function loadTeams() {
 		requestData(RequestType.getAllTeams).then(function (data) {
-			equipes = data.sort(function(a, b) {
+			equipes = data.sort(function (a, b) {
 				return b.points - a.points;
 			});
 		});
@@ -72,16 +78,27 @@
 					/>
 				</div>
 
-				<AskForCreation bind:teams={equipes}/>
+				<AskForCreation bind:teams={equipes} />
 				<AskForValidation bind:players={classement} bind:defis />
 			{:else if classement.length != 0}
-				{#each classement as _player}
-					<Player
-						username={_player.name}
-						points={_player.points}
-						imgUrl={_player.profilePictureUrl}
-					/>
-				{/each}
+				<ClassementSelector bind:showingJoueurs={isshowingjoueur} />
+				{#if isshowingjoueur}
+					{#each classement as _player}
+						<Player
+							username={_player.name}
+							points={_player.points}
+							imgUrl={_player.profilePictureUrl}
+						/>
+					{/each}
+				{:else}
+					{#each equipes as _equipe}
+						<Player
+							username={_equipe.teamName}
+							points={_equipe.points}
+							imgUrl={_equipe.imageUrl}
+						/>
+					{/each}
+				{/if}
 			{:else}
 				<LoadingIcon />
 			{/if}
@@ -89,9 +106,18 @@
 		</div>
 		<BottomBar
 			bind:state={pageActuelle}
-			on:accueil_request={() => {loadClassement(); loadTeams(); loadDefi();}}
-			on:defi_request={() => {loadDefi();}}
-			on:scoreboard_request={() => {loadClassement(); loadTeams();}}
+			on:accueil_request={() => {
+				loadClassement();
+				loadTeams();
+				loadDefi();
+			}}
+			on:defi_request={() => {
+				loadDefi();
+			}}
+			on:scoreboard_request={() => {
+				loadClassement();
+				loadTeams();
+			}}
 		/>
 	</div>
 </main>
