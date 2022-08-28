@@ -2,9 +2,9 @@
 	import { readFileAsync, requestData, RequestType } from "../shared";
 
 	export var players = [];
-	var selected_player = null;
+	var selected_player_name = null;
 	export var defis = [];
-	var selected_defi = null;
+	var selected_defi_name = null;
 
 	var files;
 
@@ -18,6 +18,11 @@
 			alert("Image trop grosse! (dois faire moins de 10Mb)");
 			return;
 		}
+
+		//We find the player based on the name we selected
+		var selected_player = players.filter(player => player.name == selected_player_name)[0];
+		//Same for the defi
+		var selected_defi = defis.filter(player => player.name == selected_defi_name)[0];
 
 		const result = await requestData(RequestType.validateChallenge, {
 			validatedUserId: selected_player.id,
@@ -40,21 +45,19 @@
 
 	<form on:submit|preventDefault={askForValidation}>
 		<p>Joueur:</p>
-		<select class="list-group" bind:value={selected_player} required={true}>
+		<input bind:value={selected_player_name} required={true} list="playerlist">
+		<datalist required={true} id="playerlist">
 			{#each players as p}
-				<option class="list-group-item" value={p}>
-					{p.name}
-				</option>
+				<option value={p.name}/>
 			{/each}
-		</select>
+		</datalist>
 		<p>Défi:</p>
-		<select class="list-group" bind:value={selected_defi} required={true}>
+		<input bind:value={selected_defi_name} required={true} list="defilist">
+		<datalist required={true} id="defilist">
 			{#each defis as d}
-				<option class="list-group-item" value={d}>
-					{d.name}
-				</option>
+				<option value={d.name}/>
 			{/each}
-		</select>
+		</datalist>
 		<p>Photo:</p>
 		<input
 			type="file"

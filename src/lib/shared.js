@@ -110,4 +110,5 @@ export const RequestType = {
 	validateChallenge: "validateChallenge",
 	getAllDefi: "getAllDefi",
 	generateEncryptionKey: "generateEncryptionKey",
+	getAllTeams: "getAlLTeams"
 };

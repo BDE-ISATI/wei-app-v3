@@ -1,6 +1,8 @@
 <script>
 	import { P, readFileAsync, requestData, RequestType } from "../shared";
 
+	export var teams = [];
+	var selectedTeamName;
 	var pseudo = "";
 	var files;
 
@@ -15,9 +17,15 @@
 			return;
 		}
 
+		//Removing unwanted spaces
+		pseudo = pseudo.replace(/\s+/g, ' ').trim();
+
+		var selectedTeam = teams.filter(team => team.teamName == selectedTeamName)[0];
+
 		const result = await requestData(RequestType.createPlayer, {
 			createdUserUsername: pseudo,
 			createdUserProfilePicture: image,
+			createdUserTeam: selectedTeam.teamId,
 		});
 
 		if (result) {
@@ -42,6 +50,13 @@
 			pattern="[A-Za-z '0-9]*"
 			placeholder="Ton pseudo"
 		/>
+		<p>Équipe:</p>
+		<input bind:value={selectedTeamName} required={true} list="teamList">
+		<datalist required={true} id="teamList">
+			{#each teams as t}
+				<option value={t.teamName}/>
+			{/each}
+		</datalist>
 		<p>Photo:</p>
 		<input
 			type="file"

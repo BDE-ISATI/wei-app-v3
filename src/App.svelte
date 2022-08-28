@@ -30,8 +30,19 @@
 		});
 	}
 
+	var equipes = []
+
+	function loadTeams() {
+		requestData(RequestType.getAllTeams).then(function (data) {
+			equipes = data.sort(function(a, b) {
+				return b.points - a.points;
+			});
+		});
+	}
+
 	loadDefi();
 	loadClassement();
+	loadTeams();
 </script>
 
 <main>
@@ -61,7 +72,7 @@
 					/>
 				</div>
 
-				<AskForCreation />
+				<AskForCreation bind:teams={equipes}/>
 				<AskForValidation bind:players={classement} bind:defis />
 			{:else if classement.length != 0}
 				{#each classement as _player}
@@ -78,9 +89,9 @@
 		</div>
 		<BottomBar
 			bind:state={pageActuelle}
-			on:accueil_request={loadDefi && loadClassement}
-			on:defi_request={loadDefi}
-			on:scoreboard_request={loadClassement}
+			on:accueil_request={() => {loadClassement(); loadTeams(); loadDefi();}}
+			on:defi_request={() => {loadDefi();}}
+			on:scoreboard_request={() => {loadClassement(); loadTeams();}}
 		/>
 	</div>
 </main>
