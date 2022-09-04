@@ -30,9 +30,7 @@
 
 	function loadClassement() {
 		requestData(RequestType.getAllPlayers).then(function (data) {
-			classement = data.sort(function (a, b) {
-				return b.points - a.points;
-			});
+			classement = data;
 		});
 	}
 
@@ -40,9 +38,7 @@
 
 	function loadTeams() {
 		requestData(RequestType.getAllTeams).then(function (data) {
-			equipes = data.sort(function (a, b) {
-				return b.points - a.points;
-			});
+			equipes = data;
 		});
 	}
 
@@ -87,7 +83,9 @@
 			{:else if classement.length != 0}
 				<ClassementSelector bind:showingJoueurs={isshowingjoueur} />
 				{#if isshowingjoueur}
-					{#each classement as _player}
+					{#each classement.sort(function (a, b) {
+						return b.points - a.points;
+					}).filter(x => !x.isTeam) as _player}
 						<Player
 							username={_player.name}
 							points={_player.points}
@@ -95,7 +93,9 @@
 						/>
 					{/each}
 				{:else}
-					{#each equipes as _equipe}
+					{#each equipes.sort(function (a, b) {
+						return b.points - a.points;
+					}) as _equipe}
 						<Player
 							username={_equipe.teamName}
 							points={_equipe.points}

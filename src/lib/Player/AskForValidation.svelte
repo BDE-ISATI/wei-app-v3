@@ -3,8 +3,10 @@
 
 	export var players = [];
 	var selected_player_name = null;
+	var selected_player;
 	export var defis = [];
 	var selected_defi_name = null;
+	var selected_defi;
 
 	var files;
 
@@ -14,15 +16,10 @@
 			""
 		);
 
-		if (new Blob([image]).size / 1e+6 > 10) {
+		if (new Blob([image]).size / 1e6 > 10) {
 			alert("Image trop grosse! (dois faire moins de 10Mb)");
 			return;
 		}
-
-		//We find the player based on the name we selected
-		var selected_player = players.filter(player => player.name == selected_player_name)[0];
-		//Same for the defi
-		var selected_defi = defis.filter(player => player.name == selected_defi_name)[0];
 
 		const result = await requestData(RequestType.validateChallenge, {
 			validatedUserId: selected_player.id,
@@ -36,6 +33,17 @@
 			alert("Erreur lors de l'envoi de la requête");
 		}
 	}
+
+	async function updateSelection() {
+		//We find the player based on the name we selected
+		selected_player = players.filter(
+			(player) => player.name == selected_player_name
+		)[0];
+		//Same for the defi
+		selected_defi = defis.filter(
+			(player) => player.name == selected_defi_name
+		)[0];
+	}
 </script>
 
 <div class="card">
@@ -45,18 +53,33 @@
 
 	<form on:submit|preventDefault={askForValidation}>
 		<p>Joueur:</p>
-		<input bind:value={selected_player_name} required={true} list="playerlist">
+		<input
+			bind:value={selected_player_name}
+			on:change={updateSelection}
+			required={true}
+			list="playerlist"
+		/>
 		<datalist required={true} id="playerlist">
 			{#each players as p}
-				<option value={p.name}/>
+				<option value={p.name} />
 			{/each}
 		</datalist>
 		<p>Défi:</p>
-		<input bind:value={selected_defi_name} required={true} list="defilist">
+		<input
+			bind:value={selected_defi_name}
+			required={true}
+			list="defilist"
+		/>
 		<datalist required={true} id="defilist">
-			{#each defis as d}
-				<option value={d.name}/>
-			{/each}
+			{#if selected_player}
+				{#each defis.filter((x) => x.teamOnly == selected_player.isTeam) as d}
+					<option value={d.name} />
+				{/each}
+			{:else}
+				{#each defis as d}
+					<option value={d.name} />
+				{/each}
+			{/if}
 		</datalist>
 		<p>Photo:</p>
 		<input
