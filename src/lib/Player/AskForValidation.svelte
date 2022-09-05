@@ -11,6 +11,7 @@
 	var files;
 
 	async function askForValidation() {
+		updateSelection();
 		const image = (await readFileAsync(files[0])).replace(
 			/^data:image\/[a-z]+;base64,/,
 			""
@@ -67,6 +68,7 @@
 		<p>Défi:</p>
 		<input
 			bind:value={selected_defi_name}
+			on:change={updateSelection}
 			required={true}
 			list="defilist"
 		/>

@@ -99,7 +99,7 @@
 						<Player
 							username={_equipe.teamName}
 							points={_equipe.points}
-							imgUrl={_equipe.imageUrl}
+							imgUrl={_equipe.teamImageUrl}
 						/>
 					{/each}
 				{/if}
