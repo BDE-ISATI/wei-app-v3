@@ -1,11 +1,11 @@
-const DATABASE_SERVER = "https://isati-wei-proxy.herokuapp.com/isati-wei-server.herokuapp.com";
+const DATABASE_SERVER = "https://isati-wei-server.herokuapp.com";
 
 
 
 
 
 
-import { Crypt, RSA } from "hybrid-crypto-js";
+import { Crypt } from "hybrid-crypto-js";
 
 /**
  * Sends a post request to the main server
@@ -24,6 +24,7 @@ export async function requestData(type, data = {}, password = null, key = null) 
 		key: key
 	};
 
+	var headers = new Headers();
 	//console.log("Requesting for: ", type);
 	//console.log(data);
 	const res = await fetch(
@@ -31,6 +32,7 @@ export async function requestData(type, data = {}, password = null, key = null) 
 		//"http://127.0.0.1:5000",
 		{
 			method: "POST",
+			mode: "cors",
 			body: JSON.stringify(body),
 		}
 	).then(res => {
@@ -82,7 +84,7 @@ export function readFileAsync(file) {
 
 /**
  * 
- * @param {int} length 
+ * @param length 
  * @returns a string of `length` random characters
  */
  function makeId(length) {
