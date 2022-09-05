@@ -47,16 +47,25 @@
 	loadTeams();
 
 	var isScrollButtonHidden = false;
-	window.onscroll = () => {isScrollButtonHidden = !(window.scrollY > 0)};
+	window.onscroll = () => {
+		isScrollButtonHidden = !(window.scrollY > 0);
+	};
 </script>
 
 <main>
-	<button class="go_to_top" data-ishidden={isScrollButtonHidden} on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Retourner en haut</button>
+	<button
+		class="go_to_top"
+		data-ishidden={isScrollButtonHidden}
+		on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+		>Retourner en haut</button
+	>
 	<div class="center">
 		<div class="app_center">
 			{#if pageActuelle == P.PDefi}
 				{#if defis.length != 0}
-					{#each defis as _defi}
+					{#each defis.sort(function (a, b) {
+						return b.points - a.points;
+					}) as _defi}
 						<Defi
 							name={_defi.name}
 							description={_defi.description}
@@ -83,9 +92,11 @@
 			{:else if classement.length != 0}
 				<ClassementSelector bind:showingJoueurs={isshowingjoueur} />
 				{#if isshowingjoueur}
-					{#each classement.sort(function (a, b) {
-						return b.points - a.points;
-					}).filter(x => !x.isTeam) as _player}
+					{#each classement
+						.sort(function (a, b) {
+							return b.points - a.points;
+						})
+						.filter((x) => !x.isTeam) as _player}
 						<Player
 							username={_player.name}
 							points={_player.points}
@@ -114,16 +125,16 @@
 				loadClassement();
 				loadTeams();
 				loadDefi();
-				window.scrollTo({ top: 0, behavior: 'smooth' });
+				window.scrollTo({ top: 0, behavior: "smooth" });
 			}}
 			on:defi_request={() => {
 				loadDefi();
-				window.scrollTo({ top: 0, behavior: 'smooth' });
+				window.scrollTo({ top: 0, behavior: "smooth" });
 			}}
 			on:scoreboard_request={() => {
 				loadClassement();
 				loadTeams();
-				window.scrollTo({ top: 0, behavior: 'smooth' });
+				window.scrollTo({ top: 0, behavior: "smooth" });
 			}}
 		/>
 	</div>
@@ -182,13 +193,13 @@
 		right: 10%;
 		box-shadow: 0px 0px 10px black;
 		transition-duration: 300ms;
-        transition-timing-function: cubic-bezier(.15,.01,0,1);
+		transition-timing-function: cubic-bezier(0.15, 0.01, 0, 1);
 	}
-	
+
 	.go_to_top[data-ishidden="true"] {
 		bottom: -10%;
 	}
-	
+
 	.go_to_top[data-ishidden="false"] {
 		bottom: 10%;
 	}
