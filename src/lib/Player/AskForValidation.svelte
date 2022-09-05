@@ -22,6 +22,13 @@
 			return;
 		}
 
+		//Si l'utilisateur a mal choisi, envoie la requète pour sa team
+		if (selected_player.isTeam != selected_defi.teamOnly) {
+			selected_player = players.filter(
+				(player) => player.name == selected_player.teamId
+			)[0];
+		}
+
 		const result = await requestData(RequestType.validateChallenge, {
 			validatedUserId: selected_player.id,
 			validatedChallengeId: selected_defi.id,
