@@ -8,6 +8,8 @@
 	import AskForValidation from "./lib/Player/AskForValidation.svelte";
 	import AskForCreation from "./lib/Player/AskForCreation.svelte";
 	import ClassementSelector from "./lib/ClassementSelector.svelte";
+	import Team from "./lib/Scoreboard/Team.svelte";
+	import Inspector from "./lib/Inspector.svelte";
 
 	const isati_logo = "images/isati_logo300px.png";
 
@@ -50,6 +52,12 @@
 	window.onscroll = () => {
 		isScrollButtonHidden = !(window.scrollY > 0);
 	};
+
+	var selectedPlayerInspector = null;
+	function openProfileInspector(player) {
+		console.log(player.detail);
+		selectedPlayerInspector = player.detail;
+	}
 </script>
 
 <main>
@@ -71,6 +79,7 @@
 							description={_defi.description}
 							points={_defi.points}
 							image={_defi.image}
+							isTeam={_defi.teamOnly}
 						/>
 					{/each}
 				{:else}
@@ -98,17 +107,16 @@
 						})
 						.filter((x) => !x.isTeam) as _player}
 						<Player
-							username={_player.name}
-							points={_player.points}
-							imgUrl={_player.profilePictureUrl}
+							player={_player}
+							on:clicked_profile={openProfileInspector}
 						/>
 					{/each}
 				{:else}
 					{#each equipes.sort(function (a, b) {
 						return b.points - a.points;
 					}) as _equipe}
-						<Player
-							username={_equipe.teamName}
+						<Team
+							name={_equipe.teamName}
 							points={_equipe.points}
 							imgUrl={_equipe.teamImageUrl}
 						/>
@@ -138,6 +146,9 @@
 			}}
 		/>
 	</div>
+	{#if selectedPlayerInspector != null}
+		<Inspector bind:player={selectedPlayerInspector} challenges={defis}/>
+	{/if}
 </main>
 
 <style>

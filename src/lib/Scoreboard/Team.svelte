@@ -1,21 +1,13 @@
 <script>
-	export var player = {};
-	var username = player.name;
-	var points = player.points;
-	var imgUrl = player.profilePictureUrl ? player.profilePictureUrl : "https://i.imgur.com/poJVcio.png";
-
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-
-	function click() {
-		dispatch("clicked_profile", player);
-	}
+	export var name = "";
+	export var points = 0;
+	export var imgUrl = "https://i.imgur.com/poJVcio.png";
 </script>
 
-<div class="card" on:click={click}>
+<div class="card">
 	<!-- svelte-ignore a11y-img-redundant-alt -->
 	<img src={imgUrl} class="user_pfp" alt="Photo de profil" />
-	<p class="description">{username}<br>{points} points</p>
+	<p class="description">{name}<br>{points} points</p>
 </div>
 
 <style>

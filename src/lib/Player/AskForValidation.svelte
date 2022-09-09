@@ -80,15 +80,9 @@
 			list="defilist"
 		/>
 		<datalist required={true} id="defilist">
-			{#if selected_player}
-				{#each defis.filter((x) => x.teamOnly == selected_player.isTeam) as d}
-					<option value={d.name} />
-				{/each}
-			{:else}
-				{#each defis as d}
-					<option value={d.name} />
-				{/each}
-			{/if}
+			{#each defis as d}
+				<option value={d.name} />
+			{/each}
 		</datalist>
 		<p>Photo:</p>
 		<input
