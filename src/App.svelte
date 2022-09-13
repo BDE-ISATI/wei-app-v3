@@ -71,7 +71,7 @@
 		<div class="app_center">
 			{#if pageActuelle == P.PDefi}
 				{#if defis.length != 0}
-					{#each defis.sort(function (a, b) {
+					{#each defis.filter(x => x.actif).sort(function (a, b) {
 						return b.points - a.points;
 					}) as _defi}
 						<Defi

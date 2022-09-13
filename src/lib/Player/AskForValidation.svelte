@@ -80,7 +80,7 @@
 			list="defilist"
 		/>
 		<datalist required={true} id="defilist">
-			{#each defis as d}
+			{#each defis.filter(x => x.actif) as d}
 				<option value={d.name} />
 			{/each}
 		</datalist>
