@@ -25,7 +25,7 @@
 		//Si l'utilisateur a mal choisi, envoie la requète pour sa team
 		if (selected_player.isTeam != selected_defi.teamOnly) {
 			selected_player = players.filter(
-				(player) => player.name == selected_player.teamId
+				(player) => player.id == selected_player.teamId
 			)[0];
 		}
 
@@ -47,6 +47,7 @@
 		selected_player = players.filter(
 			(player) => player.name == selected_player_name
 		)[0];
+		console.log(selected_player);
 		//Same for the defi
 		selected_defi = defis.filter(
 			(player) => player.name == selected_defi_name
